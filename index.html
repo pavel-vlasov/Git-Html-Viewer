@@ -622,7 +622,10 @@ function pollWorkerForAuth(sid, interval) {
         sessionStorage.setItem('ghv-user', data.login || '');
         hideDeviceModal();
         setAuthUser(data.login || '');
-        setTimeout(() => location.reload(), 500);
+        renderProxyConfig();
+        const initUrl = getUrlFromLocation();
+        if (initUrl) preview(initUrl);
+        else { setState('landing'); initRateLimit(); }
         return;
       }
       if (data.status === 'pending') {
